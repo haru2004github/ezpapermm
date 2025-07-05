@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easy Paper MM - Digital Education Assistant</title>
+    <link rel="icon" href="./img/logo_light.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+
+        body{
+             font-family: "Roboto", sans-serif;
+        font-style: normal;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                fontFamily: {
+                    'sans': ['"Noto Sans Myanmar"', 'Roboto', 'sans-serif'],
+                    'english': ['Roboto', 'sans-serif'],
+                },
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f4ff',
+                            100: '#e0e9ff',
+                            200: '#c7d7fe',
+                            300: '#a5b8fc',
+                            400: '#818cf8',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#3730a3',
+                            900: '#312e81',
+                        },
+                        secondary: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        },
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 14px 0 rgba(0, 0, 0, 0.1)',
+                        'hard': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                        'glow': '0 0 15px rgba(99, 102, 241, 0.3)',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-balance {
+                text-wrap: balance;
+            }
+            .transition-smooth {
+                transition: all 0.3s ease;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 font-sans transition-smooth roboto">
+    <!-- Language & Theme Toggle -->
+    <div class="fixed top-4 right-4 z-50 flex gap-2">
+        <!-- Language Toggle -->
+        <div class="relative group">
+            <button id="languageToggle" class="px-3 py-1 bg-white dark:bg-gray-800 rounded-lg shadow-hard hover:shadow-glow transition-smooth flex items-center gap-1 border border-gray-200 dark:border-gray-700">
+                <span id="currentLang" class="font-medium">EN</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </button>
+            <div class="absolute right-0 mt-1 w-20 bg-white dark:bg-gray-800 rounded-lg shadow-hard overflow-hidden hidden group-hover:block">
+                <button data-lang="en" class="w-full px-3 py-1 text-left hover:bg-primary-100 dark:hover:bg-gray-700 transition-smooth">English</button>
+                <button data-lang="my" class="w-full px-3 py-1 text-left hover:bg-primary-100 dark:hover:bg-gray-700 transition-smooth">မြန်မာ</button>
+            </div>
+        </div>
+        
+        <!-- Theme Toggle -->
+        <div class="relative group">
+            <button id="themeToggle" class="px-3 py-1 bg-white dark:bg-gray-800 rounded-lg shadow-hard hover:shadow-glow transition-smooth flex items-center gap-1 border border-gray-200 dark:border-gray-700">
+                <svg id="themeIcon" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </button>
+            <div class="absolute right-0 mt-1 w-32 bg-white dark:bg-gray-800 rounded-lg shadow-hard overflow-hidden hidden group-hover:block">
+                <button data-theme="light" class="w-full px-3 py-1 text-left hover:bg-primary-100 dark:hover:bg-gray-700 transition-smooth flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    Light
+                </button>
+                <button data-theme="dark" class="w-full px-3 py-1 text-left hover:bg-primary-100 dark:hover:bg-gray-700 transition-smooth flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                    Dark
+                </button>
+                <button data-theme="system" class="w-full px-3 py-1 text-left hover:bg-primary-100 dark:hover:bg-gray-700 transition-smooth flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    System
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-primary-600 to-primary-800 text-white py-8 shadow-lg pt-14 md:pt-8">
+
+        <!-- Logo start  -->
+        <div class="flex justify-center items-center">
+            <img src="./img/logo_light.png" class="w-32 rounded-lg"  alt="">
+        </div>
+        <!-- Logo end  -->
+
+
+        <div class="container mx-auto px-4 mt-6">
+            <div class="flex flex-col items-center text-center">
+                <p class="text-xl font-semibold md:text-2xl opacity-90" data-lang="en">Your Digital Education Assistant</p>
+                <p class="text-xl font-semibold md:text-2xl opacity-90 hidden" data-lang="my">ပညာရေးအတွက် Digital အကူအညီ</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 ">
+        <!-- About Section -->
+        <section class="mb-12 ">
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-soft hover:shadow-hard transition-smooth">
+                <h2 class="text-2xl font-bold mb-4 text-primary-600 dark:text-primary-400" data-lang="en">Welcome to Easy Paper MM</h2>
+                <h2 class="text-2xl font-bold mb-4 text-primary-600 dark:text-primary-400 hidden" data-lang="my">Easy Paper MM မှကြိုဆိုပါသည်</h2>
+                
+                <p class="mb-4" data-lang="en">We help teachers and educators in Myanmar save time by providing professional document formatting and retyping services.</p>
+                <p class="mb-4 hidden" data-lang="my">မြန်မာနိုင်ငံရှိဆရာ၊ဆရာမများအတွက် အချိန်ကုန်သက်သာစေရန် ပညာရေးစာရွက်စာတမ်းများကို ပရော်ဖက်ရှင်နယ်အဆင့် ပြင်ဆင်ပေးသော ဝန်ဆောင်မှုများကို ပေးပါသည်။</p>
+                
+                <h3 class="text-xl font-semibold mt-6 mb-2 text-primary-600 dark:text-primary-400" data-lang="en">Our Vision</h3>
+                <h3 class="text-xl font-semibold mt-6 mb-2 text-primary-600 dark:text-primary-400 hidden" data-lang="my">မျှော်မှန်းချက်</h3>
+                
+                <p data-lang="en">To become the go-to digital assistant for Myanmar's educators, reducing administrative workload and enabling stress-free teaching preparation.</p>
+                <p class="hidden" data-lang="my">စာသင်ကြားနေသော သူများအတွက် သင်ကြားရေးနှင့် လေ့လာရေးကို ပိုမိုအာရုံစိုက်လုပ်ကိုင်နိုင်စေရန် ရည်ရွယ်၍ တစ်ထောင့်တစ်နေရာက မြန်ဆန်မှန်ကန်စွာကူညီချင်ပါတယ်။</p>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-primary-600 dark:text-primary-400" data-lang="en">Our Services</h2>
+            <h2 class="text-2xl font-bold mb-6 text-primary-600 dark:text-primary-400 hidden" data-lang="my">ဝန်ဆောင်မှုများ</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Service 1 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-soft hover:shadow-hard hover:translate-y-[-5px] transition-smooth">
+                    <div class="bg-primary-100 dark:bg-primary-900/30 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-600 dark:text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-primary-600 dark:text-primary-400" data-lang="en">Retyping Service</h3>
+                    <h3 class="text-xl font-semibold mb-2 text-primary-600 dark:text-primary-400 hidden" data-lang="my">စာပြန်ရိုက်ပေးသောဝန်ဆောင်မှု</h3>
+                    <p class="mb-3" data-lang="en">Convert handwritten notes, screenshots, or phone photos into editable Word or PDF documents with 100% accuracy.</p>
+                    <p class="mb-3 hidden" data-lang="my">လက်ရေးမှတ်စုများ၊ ဖုန်းဓာတ်ပုံများမှ စာသားများကို Word သို့မဟုတ် PDF အဖြစ် ၁၀၀% တိကျစွာ ပြောင်းလဲပေးပါသည်။</p>
+                    <ul class="space-y-1 text-sm text-gray-600 dark:text-gray-300">
+                        <li class="flex items-start" data-lang="en">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mt-0.5 mr-2 text-primary-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Supports both Burmese and English
+                        </li>
+                        <li class="flex items-start hidden" data-lang="my">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mt-0.5 mr-2 text-primary-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            မြန်မာနှင့်အင်္ဂလိပ်ဘာသာနှစ်မျိုးလုံးကို ပံ့ပိုးပေးပါသည်
+                        </li>
+                        <li class="flex items-start" data-lang="en">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mt-0.5 mr-2 text-primary-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Preserves original formatting
+                        </li>
+                        <li class="flex items-start hidden" data-lang="my">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mt-0.5 mr-2 text-primary-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            မူရင်းformatကိုလည်း ထိန်းသိမ်းပေးပါသည်
+                        </li>
+                        <li class="flex items-start" data-lang="en">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mt-0.5 mr-2 text-primary-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Quick turnaround
+                        </li>
+                        <li class="flex items-start hidden" data-lang="my">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mt-0.5 mr-2 text-primary-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            အမြန်ဆုံးပြန်လည်ပေးပို့ပေးပါသည်
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-soft hover:shadow-hard hover:translate-y-[-5px] transition-smooth">
+                    <div class="bg-primary-100 dark:bg-primary-900/30 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-600 dark:text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-primary-600 dark:text-primary-400" data-lang="en">Question Formatting</h3>
+                    <h3 class="text-xl font-semibold mb-2 text-primary-600 dark:text-primary-400 hidden" data-lang="my">မေးခွန်းFormatပြင်ဆင်ခြင်း</h3>
+                    <p class="mb-3" data-lang="en">Professional formatting for tests, worksheets, and exams with consistent styling.</p>
+                    <p class="mb-3 hidden" data-lang="my">စာမေးပွဲများအတွက်၊ လေ့ကျင့်ခန်းစာရွက်များအတွက် မေးခွန်းပုံစံကျကျformatကျအောင်လုပ်ပေးခြင်း</p>
+                    <ul class="space-y-1 text-sm text-gray-600 dark:text-gray-300">
+                        <li class="flex items-start" data-lang="en">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mt-0.5 mr-2 text-primary-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Font, spacing, and numbering adjustments
+                        </li>
+                        <li class="flex items-start hidden" data-lang="my">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mt-0.5 mr-2 text-primary-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            ဖောင့်၊ အကွာအဝေး၊ နံပါတ်များကို ညှိပေးခြင်း
+                        </li>
+                        <li class="flex items-start" data-lang="en">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mt-0.5 mr-2 text-primary-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Chapter-based test organization
+                        </li>
+                        <li class="flex items-start hidden" data-lang="my">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mt-0.5 mr-2 text-primary-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            သက်ဆိုင်ရာသင်ခန်းစားများအလိုက်စုစည်းပေးခြင်း။
+                        </li>
+                        <li class="flex items-start" data-lang="en">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mt-0.5 mr-2 text-primary-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Exam-ready layouts
+                        </li>
+                        <li class="flex items-start hidden" data-lang="my">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mt-0.5 mr-2 text-primary-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            စာမေးပွဲအတွက် အဆင်သင့်ဖြစ်သော ဒီဇိုင်းများ
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-soft hover:shadow-hard hover:translate-y-[-5px] transition-smooth">
+                    <div class="bg-primary-100 dark:bg-primary-900/30 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-600 dark:text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-primary-600 dark:text-primary-400" data-lang="en">Exam Ready Output</h3>
+                    <h3 class="text-xl font-semibold mb-2 text-primary-600 dark:text-primary-400 hidden" data-lang="my">စာမေးပွဲအတွက်အဆင်သင့်ဖြစ်သောဖိုင်များ</h3>
+                    <p class="mb-3" data-lang="en">Print-ready documents with perfect layout for immediate classroom use.</p>
+                    <p class="mb-3 hidden" data-lang="my">တိုက်ရိုက်အသုံးပြုနိုင်သော စာမေးပွဲဖိုင်များကို ပရင့်ထုတ်အဆင်သင့်ဖြစ်အောင် ပြုလုပ်ပေးခြင်း။</p>
+                    <ul class="space-y-1 text-sm text-gray-600 dark:text-gray-300">
+                        <li class="flex items-start" data-lang="en">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mt-0.5 mr-2 text-primary-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Optimized font sizes and alignment
+                        </li>
+                        <li class="flex items-start hidden" data-lang="my">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mt-0.5 mr-2 text-primary-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            ဖောင့်အရွယ်အစားနှင့်နေရာအစိတ်အကျဲများကို အကောင်းဆုံးဖြစ်အောင်ပြုလုပ်ပေးခြင်း
+                        </li>
+                        <li class="flex items-start" data-lang="en">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mt-0.5 mr-2 text-primary-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            PDF or Word (.docx) output
+                        </li>
+                        <li class="flex items-start hidden" data-lang="my">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mt-0.5 mr-2 text-primary-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            PDF သို့မဟုတ် Word (.docx) ဖိုင်အဖြစ် ထုတ်ပေးခြင်း
+                        </li>
+                        <li class="flex items-start" data-lang="en">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mt-0.5 mr-2 text-primary-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Custom worksheet design
+                        </li>
+                        <li class="flex items-start hidden" data-lang="my">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mt-0.5 mr-2 text-primary-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            စိတ်ကြိုက်လေ့ကျင့်ခန်းစာရွက်ဒီဇိုင်းများ
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section class="mb-12">
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-soft hover:shadow-hard transition-smooth">
+                <h2 class="text-2xl font-bold mb-4 text-primary-600 dark:text-primary-400" data-lang="en">Pricing</h2>
+                <h2 class="text-2xl font-bold mb-4 text-primary-600 dark:text-primary-400 hidden" data-lang="my">စျေးနှုန်း</h2>
+                
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                        <thead class="bg-gray-50 dark:bg-gray-700">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider" data-lang="en">Service</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider hidden" data-lang="my">ဝန်ဆောင်မှု</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider" data-lang="en">Details</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider hidden" data-lang="my">အသေးစိတ်</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider" data-lang="en">Price</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider hidden" data-lang="my">စျေးနှုန်း</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-smooth">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100" data-lang="en">Retyping & Formatting</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100 hidden" data-lang="my">စာပြန်ရိုက်ခြင်း နှင့် Formatချိန်ပေးခြင်း</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300" data-lang="en">Per page (A4 size)</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300 hidden" data-lang="my">တစ်မျက်နှာလျှင် (A4 size)</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">500-800 MMK</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-smooth">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100" data-lang="en">Formatting</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100 hidden" data-lang="my">Formatချိန်ပေးခြင်း</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300" data-lang="en">Per Page (A4 size)</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300 hidden" data-lang="my">တစ်မျက်နှာလျှင် (A4 size)</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">400-600 MMK</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-smooth">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100" data-lang="en">Bulk Discount</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100 hidden" data-lang="my">များများမှာယူသူများအတွက်လျှော့စျေး</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300" data-lang="en">30+ pages</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300 hidden" data-lang="my">၃၀ မျက်နှာအထက်</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">10% off total</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-smooth">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100" data-lang="en">Monthly Package (Retyping & Formatting)</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100 hidden" data-lang="my">လစဉ်ဝယ်ယူနိုင်သောPackageများ (စာပြန်ရိုက်ခြင်း နှင့် Formatချိန်ပေးခြင်း) </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300" data-lang="en">Up to 70 pages</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300 hidden" data-lang="my">မျက်နှာ ၇၀ အထိ</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">35,000 MMK</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="mt-4 text-sm text-gray-500 dark:text-gray-300" data-lang="en"><span class="font-medium">Note:</span> Final pricing may vary based on content complexity and urgency.</p>
+                <p class="mt-4 text-sm text-gray-500 dark:text-gray-300 hidden" data-lang="my"><span class="font-medium">မှတ်ချက်:</span> အထက်ဖော်ပြပါဈေးနှုန်းများသည် လာရောက်အပ်သော စာ၏ ရှုပ်ထွေးမှု , အရေးအကြီးလိုမှုတို့ပေါ်မူတည်ပြီးပြောင်းလဲရခြင်းဖြစ်ပါသည်။</p>
+            </div>
+        </section>
+
+        <!-- Audience Section -->
+        <section class="mb-12">
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-soft hover:shadow-hard transition-smooth">
+                <h2 class="text-2xl font-bold mb-4 text-primary-600 dark:text-primary-400" data-lang="en">Who We Serve</h2>
+                <h2 class="text-2xl font-bold mb-4 text-primary-600 dark:text-primary-400 hidden" data-lang="my">ကျွန်ုပ်တို့၏ဝန်ဆောင်မှုခံယူသူများ</h2>
+                
+                <p class="mb-3" data-lang="en">Easy Paper MM is perfect for:</p>
+                <p class="mb-3 hidden" data-lang="my">Easy Paper MM သည် အောက်ပါပုဂ္ဂိုလ်များအတွက် အထူးသင့်တော်ပါသည်:</p>
+                
+                <ul class="space-y-2">
+                    <li class="flex items-start" data-lang="en">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-500 mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                        Primary and secondary school teachers
+                    </li>
+                    <li class="flex items-start hidden" data-lang="my">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-500 mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                        အခြေခံနှင့် အထက်တန်းကျောင်းဆရာ၊ဆရာမများ
+                    </li>
+                    <li class="flex items-start" data-lang="en">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-500 mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                        Private tutors (Myanmar Curriculum/IGCSE)
+                    </li>
+                    <li class="flex items-start hidden" data-lang="my">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-500 mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                        သီးသန့်သင်ကြားပေးသူများ (မြန်မာသင်ရိုး/IGCSE)
+                    </li>
+                    <li class="flex items-start" data-lang="en">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-500 mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                        Tuition centers
+                    </li>
+                    <li class="flex items-start hidden" data-lang="my">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-500 mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                        ကျူရှင်စင်တာများ
+                    </li>
+                    <li class="flex items-start" data-lang="en">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-500 mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                        Individuals preparing custom learning materials
+                    </li>
+                    <li class="flex items-start hidden" data-lang="my">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-500 mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                        စိတ်ကြိုက်သင်ခန်းစာများပြင်ဆင်လိုသူများ
+                    </li>
+                    <li class="flex items-start hidden" data-lang="my">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-500 mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                        မေးခွန်းများကိုသင်ခန်းစာခေါင်းစဉ်အလိုက်စုစည်းပြီး printထုတ်ကာ ပြန်လည်ရောင်းချလိုသူများ။
+                    </li>
+                      <li class="flex items-start" data-lang="en">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-500 mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                        People who want to organize questions by lesson, print them, and sell them again.
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="mb-12 text-center">
+            <div class="bg-gradient-to-r from-primary-500 to-primary-700 rounded-xl p-8 shadow-lg hover:shadow-glow transition-smooth">
+                <h2 class="text-2xl md:text-3xl font-bold text-white mb-4" data-lang="en">Ready to Save Time on Your Teaching Materials?</h2>
+                <h2 class="text-2xl md:text-3xl font-bold text-white mb-4 hidden" data-lang="my">သင့်ရဲ့သင်ကြားရေးပစ္စည်းများအတွက် အချိန်ကုန်သက်သာစေလိုပါသလား?</h2>
+                
+                <p class="text-white/90 mb-6 max-w-2xl mx-auto" data-lang="en">Send us your documents today and get professionally formatted files in no time!</p>
+                <p class="text-white/90 mb-6 max-w-2xl mx-auto hidden" data-lang="my">ဒီနေ့ပဲပို့လိုက်ပြီး အသင့်သုံးနိုင်အောင်ပြင်ဆင်ပေးထားသောဖိုင်များကို အမြန်ဆုံးပြန်လည်ရယူပါ။</p>
+                
+                <a href="https://www.facebook.com/share/1BKavejPrQ/" target="_blank" class="inline-flex items-center px-6 py-3 bg-white text-primary-600 rounded-lg font-bold shadow-md hover:bg-gray-100 hover:shadow-lg transition-smooth">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/>
+                    </svg>
+                    <span data-lang="en">Contact Us Now</span>
+                    <span class="hidden" data-lang="my">ယခုဆက်သွယ်ပါ</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="mb-12 text-center">
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-soft hover:shadow-hard transition-smooth">
+                <h2 class="text-2xl font-bold mb-4 text-primary-600 dark:text-primary-400" data-lang="en">Contact Us</h2>
+                <h2 class="text-2xl font-bold mb-4 text-primary-600 dark:text-primary-400 hidden" data-lang="my">ဆက်သွယ်ရန်</h2>
+                
+                <p class="mb-4" data-lang="en">We accept files via:</p>
+                <p class="mb-4 hidden" data-lang="my">ဖိုင်များကို အောက်ပါနည်းလမ်းများဖြင့် လက်ခံပါသည်:</p>
+                
+                <div class="flex flex-wrap gap-4 md:justify-center justify-start items-center">
+                    <a href="https://www.facebook.com/share/1BKavejPrQ/" target="_blank" class="flex items-center px-4 py-2 bg-blue-600 text-white mx-auto md:mx-0 rounded-lg shadow-md hover:bg-blue-700 hover:shadow-lg transition-smooth">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/>
+                        </svg>
+                        <span data-lang="en">Messenger</span>
+                        <span class="hidden" data-lang="my">Messenger</span>
+                    </a>
+                    
+                    <a target="_blank" href="https://t.me/zane23445" class="flex mx-auto md:mx-0 items-center px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 hover:shadow-lg transition-smooth ">
+                        <i class="fab fa-telegram text-xl"></i>
+                        <span data-lang="en">Telegram</span>
+                        <span class="hidden" data-lang="my">Telegram</span>
+                    </a>
+                </div>
+                
+                <div class="mt-6">
+                    <p class="text-sm text-gray-600 dark:text-gray-300" data-lang="en">Accepted file types: Images (JPG, PNG), Word (.docx), PDF</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 hidden" data-lang="my">လက်ခံသောဖိုင်အမျိုးအစားများ: ပုံများ (JPG, PNG), Word (.docx), PDF</p>
+                    
+                    <p class="text-sm mt-2" data-lang="en"><span class="font-medium text-primary-600 dark:text-primary-400">Privacy guaranteed:</span> All shared content remains confidential.</p>
+                    <p class="text-sm mt-2 hidden" data-lang="my"><span class="font-medium text-primary-600 dark:text-primary-400">ကိုယ်ရေးကိုယ်တာလုံခြုံမှု:</span> မျှဝေထားသောအကြောင်းအရာများအားလုံးကို လျှို့ဝှက်ထားမည်ဖြစ်ပါသည်။</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p >&copy; 2025 Easy Paper MM</p>
+            <p class="mt-2" data-lang="en">Yangon, Myanmar</p>
+            <p class="mt-2 hidden" data-lang="my">ရန်ကုန်၊ မြန်မာ</p>
+        </div>
+    </footer>
+
+    <script>
+        // Language Toggle
+        const languageToggle = document.getElementById('languageToggle');
+        const currentLang = document.getElementById('currentLang');
+        const langButtons = document.querySelectorAll('[data-lang]');
+        
+        langButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const lang = this.getAttribute('data-lang');
+                currentLang.textContent = lang.toUpperCase();
+                
+                // Hide all language elements
+                document.querySelectorAll('[data-lang]').forEach(el => {
+                    if (el.tagName === 'BUTTON') return;
+                    el.classList.add('hidden');
+                });
+                
+                // Show selected language elements
+                document.querySelectorAll(`[data-lang="${lang}"]`).forEach(el => {
+                    if (el.tagName === 'BUTTON') return;
+                    el.classList.remove('hidden');
+                });
+            });
+        });
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const html = document.documentElement;
+        
+        // Check for saved theme preference or use system preference
+        const savedTheme = localStorage.getItem('theme') || 'system';
+        setTheme(savedTheme);
+
+        document.querySelectorAll('[data-theme]').forEach(button => {
+            button.addEventListener('click', function() {
+                const theme = this.getAttribute('data-theme');
+                setTheme(theme);
+                localStorage.setItem('theme', theme);
+            });
+        });
+
+        function setTheme(theme) {
+            if (theme === 'system') {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                html.className = prefersDark ? 'dark' : 'light';
+                themeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />';
+            } else {
+                html.className = theme;
+                if (theme === 'dark') {
+                    themeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />';
+                } else {
+                    themeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />';
+                }
+            }
+        }
+
+        // Watch for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if (localStorage.getItem('theme') === 'system') {
+                setTheme('system');
+            }
+        });
+    </script>
+</body>
+</html>
